@@ -42,7 +42,3 @@ const executor = (input) => {
     }
   }
 }
-
-console.clear();
-const input = Deno.readTextFileSync("src/input.txt");
-console.log(executor(input))
