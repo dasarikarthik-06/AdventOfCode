@@ -1,4 +1,3 @@
-import { assertEquals } from "jsr:@std/assert";
 let wirePos = [0, 0];
 
 const direction = {

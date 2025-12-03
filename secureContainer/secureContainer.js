@@ -1,12 +1,12 @@
-const hasAdjecentSameNum = (num) => {
-  const numInString = num.toString();
-  for (let index = 2; index < numInString.length - 1; index++) {
-    if(numInString[index] === numInString[index - 1]) {
-      return true;
-    }
-  }
-  return false;
-};
+// const hasAdjecentSameNum = (num) => {
+//   const numInString = num.toString();
+//   for (let index = 2; index < numInString.length - 1; index++) {
+//     if(numInString[index] === numInString[index - 1]) {
+//       return true;
+//     }
+//   }
+//   return false;
+// };
 
 const doesMatchCriteria = (num) => {
   const digits = num.toString().split("");
