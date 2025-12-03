@@ -12,8 +12,3 @@ export const masses = (modulesMasses) => {
   );
   return requirdFuelForModules.reduce((acc, eachModule) => acc + eachModule, 0);
 };
-
-console.clear();
-const  input = Deno.readTextFileSync("src/input.txt").split("\n");
-console.log(input)
-console.log(masses(input))
