@@ -1,4 +1,5 @@
-const INPUT = 5;
+// const INPUT = 5;
+let output;
 
 const parseOpcode = (instruction) => {
   const code = instruction.toString().padStart(5, "0");
@@ -11,8 +12,16 @@ const parseOpcode = (instruction) => {
   return [opcode, parameterModes];
 };
 
+const takeInput = (phase) => {
+const input = phase[0];
+phase.shift();
+
+return input
+}
+
 const display = (x) => {
-  console.log("display: ", x);
+  // console.log("display: ", x);
+  output = x;
   return x;
 };
 
@@ -43,7 +52,7 @@ const jumpIFalse = (x, y, index) => {
 const mapOperation = {
   1: { inc: 4, operation: (x, y) => x + y },
   2: { inc: 4, operation: (x, y) => x * y },
-  3: { inc: 2, operation: () => INPUT },
+  3: { inc: 2, operation: takeInput },
   4: { inc: 2, operation: display },
   5: { operation: jumpIfTrue },
   6: { operation: jumpIFalse },
@@ -59,8 +68,8 @@ const mapParametersMode = {
 const executeJump = (operation, firstParam, secondParam, index) =>
   operation(firstParam, secondParam, index);
 
-const executeOneSet = (cmd, opcode, parameterModes, index) => {
-  console.log(opcode);
+const executeOneSet = (cmd, opcode, parameterModes, index, phase) => {
+
   const operation = mapOperation[opcode]["operation"];
   const firstParam = mapParametersMode[parameterModes[0]](cmd, index, 1);
   const secondParam = mapParametersMode[parameterModes[1]](cmd, index, 2);
@@ -68,22 +77,28 @@ const executeOneSet = (cmd, opcode, parameterModes, index) => {
     const inc = executeJump(operation, firstParam, secondParam, index);
     return inc;
   }
-  const result = operation(firstParam, secondParam);
+  const result = opcode === 3 ? operation(phase) : operation(firstParam, secondParam);
+  // if(opcode === 3) {
+  //   const result = operation(input);
+  // }
+  // const result = operation(firstParam, secondParam);
   cmd[cmd[index + mapOperation[opcode]["inc"] - 1]] = result;
   return index + mapOperation[opcode]["inc"];
 };
 
-const executeEdicts = (inputString) => {
+export const executeEdicts = (inputString, phase = [5,5]) => {
   const inputs = inputString.split(",").map((x) => parseInt(x));
   let index = 0;
   while (inputs[index] !== 99 && index < inputs.length) {
     const [opcode, parameterModes] = parseOpcode(inputs[index]);
-    index = executeOneSet(inputs, opcode, parameterModes, index);
+    index = executeOneSet(inputs, opcode, parameterModes, index, phase);
   }
-  console.log(inputs);
+  // console.log(inputs);
+  console.log(phase);
+  return output;
 };
 
-console.clear();
+// console.clear();
 
 const input = Deno.readTextFileSync("sprintExt/input.txt");
 executeEdicts(input);

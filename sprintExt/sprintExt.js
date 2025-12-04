@@ -48,7 +48,7 @@ const executeOneSet = (cmd, opcode, index, parameterModes) => {
   return 0;
 };
 
-export const executeEdicts = (cmdStr) => {
+const executeEdicts = (cmdStr) => {
   const cmds = cmdStr.split(",");
   let index = 0;
 
