@@ -1,6 +1,6 @@
 // const hasAdjecentSameNum = (num) => {
 //   const numInString = num.toString();
-//   for (let index = 2; index < numInString.length - 1; index++) {
+//   for (let index = 1; index < numInString.length; index++) {
 //     if(numInString[index] === numInString[index - 1]) {
 //       return true;
 //     }
@@ -20,11 +20,12 @@ const doesMatchCriteria = (num) => {
     }
     index = lastOccurences + 1;
   }
+  return false;
 }
 
 const main = () => {
   const matchedOnes = [];
-  for (let i = 206938; i <= 679128; i++) {
+  for (let i = 245318; i <= 765747; i++) {
     if (doesMatchCriteria(i)) {
       const numInSorted = parseInt(i.toString().split("").sort().join(""))
       if(numInSorted === i) {

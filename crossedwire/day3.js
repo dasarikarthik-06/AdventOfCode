@@ -80,7 +80,7 @@ const countSteps = (intersectPoints, wire1, wire2) => {
 };
 
 const main = () => {
-  const wiresInstruction = Deno.readTextFileSync("day3input.txt").split("\n");
+  const wiresInstruction = Deno.readTextFileSync("crossedwire/day3input.txt").split("\n");
   // const wiresInstruction = ["R8,U5,L5,D3", "U7,R6,D4,L4"];
   const wire1 = exectuteOneWire(wiresInstruction[0].split(","), [])[0];
   wirePos = [0, 0];
