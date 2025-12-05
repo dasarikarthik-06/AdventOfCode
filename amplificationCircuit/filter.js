@@ -2,11 +2,12 @@ import { permutations } from "jsr:@std/collections";
 import { executeEdicts } from "../sprintExt/sprintExtPart2.js";
 
 const loopOverDigits = (digits, memory) => {
-  let dummyMemory = memory;
+  const dummyMemory = [memory, memory, memory, memory, memory];
   let result = 0;
   for (let index = 0; index < digits.length; index++) {
-    result = executeEdicts(dummyMemory, [digits[index], result]);
-    dummyMemory = memory;
+    result = executeEdicts(dummyMemory[index], [digits[index], result]);
+    console.log(dummyMemory[index], result);
+    // break
   }
 
   return result;
@@ -18,6 +19,7 @@ const loopOverAllCombinations = (combiantions, memory) => {
   for (let i = 0; i < combiantions.length; i++) {
     const result = loopOverDigits(combiantions[i], dummyMemory);
     results.push(result);
+    // break;
     dummyMemory = memory;
   }
 
@@ -32,5 +34,5 @@ const main = (memory) => {
 };
 
 console.clear();
-const memory = Deno.readTextFileSync("amplificationCircuit/memory.txt");
+const memory = Deno.readTextFileSync("amplificationCircuit/memory2.txt");
 main(memory);
