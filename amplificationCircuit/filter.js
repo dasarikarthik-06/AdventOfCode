@@ -1,13 +1,14 @@
+import { executeEdicts } from "../amplificationCircuit/sprint.js";
 import { permutations } from "jsr:@std/collections";
-import { executeEdicts } from "../sprintExt/sprintExtPart2.js";
 
 const loopOverDigits = (digits, memory) => {
-  const dummyMemory = [memory, memory, memory, memory, memory];
+  console.log(digits);
+  const dummyMemory = memory;
   let result = 0;
   for (let index = 0; index < digits.length; index++) {
-    result = executeEdicts(dummyMemory[index], [digits[index], result]);
-    console.log(dummyMemory[index], result);
-    // break
+    console.log([digits[index], result]);
+    result = executeEdicts(dummyMemory, [digits[index], result]);
+    console.log(dummyMemory, result);
   }
 
   return result;
@@ -19,7 +20,6 @@ const loopOverAllCombinations = (combiantions, memory) => {
   for (let i = 0; i < combiantions.length; i++) {
     const result = loopOverDigits(combiantions[i], dummyMemory);
     results.push(result);
-    // break;
     dummyMemory = memory;
   }
 
@@ -27,6 +27,7 @@ const loopOverAllCombinations = (combiantions, memory) => {
 };
 
 const main = (memory) => {
+  console.log("sdkn");
   const combiantions = permutations([0, 1, 2, 3, 4]);
   const results = loopOverAllCombinations(combiantions, memory);
   console.log(results);
@@ -34,5 +35,5 @@ const main = (memory) => {
 };
 
 console.clear();
-const memory = Deno.readTextFileSync("amplificationCircuit/memory2.txt");
+const memory = Deno.readTextFileSync("amplificationCircuit/memory.txt");
 main(memory);

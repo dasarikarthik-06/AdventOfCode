@@ -1,6 +1,5 @@
 // const INPUT = 5;
 let output;
-let halted = 0;
 
 const parseOpcode = (instruction) => {
   const code = instruction.toString().padStart(5, "0");
@@ -70,7 +69,7 @@ const executeJump = (operation, firstParam, secondParam, index) =>
   operation(firstParam, secondParam, index);
 
 const executeOneSet = (cmd, opcode, parameterModes, index, phase) => {
-  console.log(opcode)
+  console.log(opcode);
   const operation = mapOperation[opcode]["operation"];
   const firstParam = mapParametersMode[parameterModes[0]](cmd, index, 1);
   const secondParam = mapParametersMode[parameterModes[1]](cmd, index, 2);
@@ -85,24 +84,24 @@ const executeOneSet = (cmd, opcode, parameterModes, index, phase) => {
   return index + mapOperation[opcode]["inc"];
 };
 
-export const executeEdicts = (inputs, phase, index) => {
-  console.log("phase" ,phase)
-  // const inputs = inputString.split(",").map((x) => parseInt(x));
-  while (inputs[index] !== 4 && index < inputs.length) {
+export const executeEdicts = (inputString, phase = [1, 0]) => {
+  console.log(phase);
+  const inputs = inputString.split(",").map((x) => parseInt(x));
+  let index = 0;
+  while (inputs[index] !== 99 && index < inputs.length) {
     const [opcode, parameterModes] = parseOpcode(inputs[index]);
-    if(opcode === 99) {
-      return [output,index, ++halted]
-    }
-      
     index = executeOneSet(inputs, opcode, parameterModes, index, phase);
   }
-  const [opcode, parameterModes] = parseOpcode(inputs[index]);
-  index = executeOneSet(inputs, opcode, parameterModes, index, phase);
-
-  return [output, index, halted];
+  console.log("output: ", output);
+  return output;
 };
 
 // console.clear();
 
-// const input = Deno.readTextFileSync("sprintExt/input.txt");
-// executeEdicts(input);
+const input = Deno.readTextFileSync("sprintExt/input.txt");
+executeEdicts(input);
+// executeEdicts("1002,3,2,3,1101,4,2,2,3,4,4,0,4,11,99,33");
+// executeEdicts("3,0,99");
+// executeEdicts(
+//   "3,21,1008,21,8,20,1005,20,22,107,8,21,20,1006,20,31,1106,0,36,98,0,0,1002,21,125,20,4,20,1105,1,46,104,999,1105,1,46,1101,1000,1,20,4,20,1105,1,46,98,99",
+// );

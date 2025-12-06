@@ -26,11 +26,12 @@ const decodeImage = (layers) => {
   return output;
 };
 
-// const part1 = (input) => {
-//   const frequencyOfDigits = countOfEachRows(layers);
-//   const frequencyInSort = rowHasMinZeroes(frequencyOfDigits);
-//   return frequencyInSort[0]["1"] * frequencyInSort[0]["2"];
-// };
+const part1 = (input) => {
+  const layers = splitToLayers(input, width, tall);
+  const frequencyOfDigits = countOfEachRows(layers);
+  const frequencyInSort = rowHasMinZeroes(frequencyOfDigits);
+  return frequencyInSort[0]["1"] * frequencyInSort[0]["2"];
+};
 
 const part2 = (input, width, tall) => {
   const layers = splitToLayers(input, width, tall);
@@ -43,6 +44,7 @@ const main = () => {
   const input = Deno.readTextFileSync("decodeImage/input.txt").split("");
   const width = 25;
   const tall = 6;
+  console.log(part1());
   const output = part2(input, width, tall);
   const grid = chunk(output, width);
   console.log(grid.join("\n"));
